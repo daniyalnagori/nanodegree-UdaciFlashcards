@@ -1,23 +1,31 @@
 import React, { Component } from 'react'
 import { Card, CardItem, Container, Header, Content, Right, Text } from 'native-base';
-
+import { AsyncStorage } from 'react-native'
+import { getDecks } from '../utils/api'
 
 class DeckList extends Component {
+    state = {
+        decks: []
+    }
+    componentDidMount() {
+       getDecks().then((res) => {
+           this.setState({
+               decks: Object.values(res)
+           })
+       })
+    }
     render() {
-        const deck = [
-            { name: 'React', questions: '2 cards' },
-            { name: 'Angular', questions: '3 cards' },
-            { name: 'Javascript', questions: '0 cards' }
-        ]
+        const {decks} = this.state
+
         return (
             <Container>
-                <Header />
+                <Header />           
                 <Content>
-                    {deck.map((item) => (
-                        <Card key={item.name}>
-                        <CardItem header button onPress={() => alert("This is Card Header")}>
-                         <Text>{item.name}</Text>
-                         <Right><Text note>{item.questions}</Text></Right>
+                    {decks.map((item) => (
+                        <Card key={item.title}>
+                        <CardItem header button onPress={() => alert('sdf')}>
+                         <Text>{item.title}</Text>
+                         <Right><Text note>{item.questions.length} cards</Text></Right>
                         </CardItem>
                       </Card>
                     ))}
@@ -26,6 +34,5 @@ class DeckList extends Component {
         )
     }
 }
-
 
 export default DeckList

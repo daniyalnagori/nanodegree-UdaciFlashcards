@@ -1,12 +1,24 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Alert, TouchableHighlight } from 'react-native'
+import { getDeck } from '../utils/api'
 
 class DeckView extends Component {
+    state = {
+        deck : null
+    }
+    componentDidMount(){
+        getDeck('JavaScript').then((res) => {
+            this.setState({
+                deck: res
+            }) 
+        })
+    }
     render() {
+        const { deck } = this.state
         return (
             <View style={style.container}>
-                <Text style={style.mainHeading}>UdaciCards</Text>
-                <Text style={style.subHeading}>3 cards</Text>
+                <Text style={style.mainHeading}>{deck ? deck.title: ''}</Text>
+                <Text style={style.subHeading}>{deck ? deck.questions.length : ''} cards</Text>
                 <TouchableHighlight onPress={() => {
                     Alert.alert('You tapped the button!');
                 }}>
