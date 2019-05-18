@@ -11,3 +11,9 @@ export function getDeck(id) {
         .then(formatDeckResults)
         .then((result) => result[id])
 }
+
+export function saveDeck(key, deck) {
+    return AsyncStorage.mergeItem(APP_KEY, JSON.stringify({
+        [key]: deck
+    }))
+}
