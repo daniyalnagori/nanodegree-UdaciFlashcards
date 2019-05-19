@@ -5,7 +5,10 @@ import { TabNavigator } from 'react-navigation'
 import DeckList from './components/DeckList'
 import DeckView from './components/DeckView'
 import NewDeck from './components/NewDeck'
-
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducer from './reducers'
+import middleware from './middleware'
 
 export default class App extends React.Component {
   render() {
@@ -24,9 +27,11 @@ export default class App extends React.Component {
       }
     })
     return (
-      <View style={{flex: 1, paddingTop: 22}}>
-        <Tabs />
-      </View>
+      <Provider store={createStore(reducer, middleware)}>
+        <View style={{ flex: 1, paddingTop: 22 }}>
+          <Tabs />
+        </View>
+      </Provider>
     )
   }
 }
