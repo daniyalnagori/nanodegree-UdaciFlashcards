@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Alert, TouchableOpacity, TextInput} from 'react-native'
+import { View, Text } from 'react-native'
 import { saveDeckTitle } from '../utils/api'
 import { connect } from 'react-redux'
 import { storeDeck } from '../actions'
+import { Card, Input, Button } from 'react-native-elements'
 
 class NewDeck extends Component {
     state = {
-        title: 'hassan'
+        title: ''
     }
     handleTextChange = (e) => {
         this.setState({
@@ -15,56 +16,29 @@ class NewDeck extends Component {
     }
 
     onSubmit = () => {
-        this.props.dispatch(storeDeck({title: this.state.title, questions: []}))
-        // saveDeckTitle(this.state.title, {title: this.state.title, questions: []})
-        this.props.navigation.navigate('DeckList')
+        this.props.dispatch(storeDeck({ title: this.state.title, questions: [] }))
+        saveDeckTitle(this.state.title, { title: this.state.title, questions: [] })
+        this.props.navigation.goBack()
     }
-    
+
     render() {
         return (
-            <View style={style.container}>
-                <Text style={style.mainHeading}>What is the title of your new deck?</Text>
-                <TextInput
-                    style={style.input}
-                    onChangeText={this.handleTextChange}
-                    value={this.state.title}
-                />
-                <TouchableOpacity onPress={this.onSubmit}>
-                    <View style={style.btn}>
-                        <Text style={style.buttonText}>Add Deck</Text>
-                    </View>
-                </TouchableOpacity>
+            <View>
+                <Card>
+                    <Text style={{ fontSize: 35 }}>What is the title of your new deck?</Text>
+                    <Input
+                        placeholder="Title"
+                        onChangeText={this.handleTextChange}
+                        inputContainerStyle={{ marginBottom: 30, marginTop: 30 }}
+                    />
+                    <Button
+                        title="Submit"
+                        onPress={this.onSubmit}
+                    />
+                </Card>
             </View>
         )
     }
 }
-
-const style = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    mainHeading: {
-        fontSize: 35,
-    },
-    buttonText: {
-        padding: 20,
-        color: 'white'
-    },
-    btn: {
-        marginTop: 50,
-        backgroundColor: 'blue',
-        borderRadius: 5
-    },
-    input: { 
-        height: 40, 
-        borderColor: 'gray', 
-        borderWidth: 1, 
-        width: 200,
-        margin: 50,
-        padding: 8 
-    }
-})
 
 export default connect()(NewDeck)
