@@ -17,7 +17,7 @@ class NewDeck extends Component {
 
     onSubmit = () => {
         this.props.dispatch(storeDeck({ title: this.state.title, questions: [] }))
-        // saveDeckTitle(this.state.title, { title: this.state.title, questions: [] })
+        saveDeckTitle(this.state.title, { title: this.state.title, questions: [] })
         this.props.navigation.navigate('DeckView', { deckTitle: this.state.title })
     }
 

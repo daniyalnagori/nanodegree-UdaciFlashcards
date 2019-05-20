@@ -11,9 +11,13 @@ import reducer from './reducers'
 import middleware from './middleware'
 import NewCard from './components/NewCard'
 import QuizView from './components/QuizView'
+import { setLocalNotification } from './utils/notifications'
 
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
   render() {
     const Tabs = TabNavigator({
       Home: {

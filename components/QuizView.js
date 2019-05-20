@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Button, Card } from 'react-native-elements'
 import { connect } from 'react-redux'
+import { clearLocalNotification, setLocalNotification } from '../utils/notifications'
 
 class QuizView extends Component {
     state = {
@@ -11,6 +12,9 @@ class QuizView extends Component {
         toggle: true,
     }
     handleGuess = (ans) => {
+        const { decks } = this.props
+        const deck = decks[this.props.navigation.state.params.deckTitle]
+
         if (ans === 'correct') {
             this.setState({
                 count: this.state.count + 1,
@@ -21,6 +25,11 @@ class QuizView extends Component {
                 count: this.state.count + 1,
                 inCorrectAnswers: this.state.inCorrectAnwers + 1
             })
+        }
+
+        if(this.state.count === deck.questions.length) {
+            clearLocalNotification()
+                .then(setLocalNotification)
         }
 
 
