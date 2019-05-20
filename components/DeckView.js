@@ -4,24 +4,30 @@ import { getDeck } from '../utils/api'
 
 class DeckView extends Component {
     state = {
-        deck : null
+        deck: null
     }
-    componentDidMount(){
-        getDeck('JavaScript').then((res) => {
-            this.setState({
-                deck: res
-            }) 
-        })
+    static navigationOptions = ({ navigation }) => {
+        const { deck } = navigation.state.params
+
+        return {
+            title: `${deck.title}`
+        }
     }
+    // componentDidMount(){
+    //     getDeck('JavaScript').then((res) => {
+    //         this.setState({
+    //             deck: res
+    //         }) 
+    //     })
+    // }
     render() {
-        const { deck } = this.state
+        // const { deck } = this.state
+        const { deck } = this.props.navigation.state.params
         return (
             <View style={style.container}>
-                <Text style={style.mainHeading}>{deck ? deck.title: ''}</Text>
-                <Text style={style.subHeading}>{deck ? deck.questions.length : ''} cards</Text>
-                <TouchableHighlight onPress={() => {
-                    Alert.alert('You tapped the button!');
-                }}>
+                <Text style={style.mainHeading}>{deck.title}</Text>
+                <Text style={style.subHeading}>{deck.questions.length} cards</Text>
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('NewCard', { deckTitle: deck.title })}>
                     <View style={style.btn}>
                         <Text style={style.buttonText}>Add Card</Text>
                     </View>

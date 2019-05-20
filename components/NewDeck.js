@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Alert, TouchableOpacity, TextInput} from 'react-native'
-import { saveDeck } from '../utils/api'
+import { saveDeckTitle } from '../utils/api'
 import { connect } from 'react-redux'
 import { storeDeck } from '../actions'
 
@@ -16,10 +16,8 @@ class NewDeck extends Component {
 
     onSubmit = () => {
         this.props.dispatch(storeDeck({title: this.state.title, questions: []}))
-        // saveDeck(this.state.title, {title: this.state.title, questions: []}).then((res) => {
-            
-        // })
-        console.log(this.state.title)
+        saveDeckTitle(this.state.title, {title: this.state.title, questions: []})
+        this.props.navigation.navigate('DeckList')
     }
     
     render() {

@@ -25,7 +25,10 @@ class DeckList extends Component {
                 <Content>
                     {decks? Object.values(decks).map((item) => (
                         <Card>
-                        <CardItem header button onPress={() => alert('sdf')}>
+                        <CardItem header button onPress={() => this.props.navigation.navigate(
+                            'DeckView', 
+                            { deck: item}
+                        )}>
                          <Text>{item.title}</Text>
                          <Right><Text note>{item.questions.length} cards</Text></Right>
                         </CardItem>
