@@ -17,6 +17,7 @@ function decks(state = {}, action) {
         case STORE_CARD_TO_DECK:
             state.decks[action.deckTitle].questions.push(action.card)
             return {
+                ...state,
                 decks : state.decks
             }
         default:

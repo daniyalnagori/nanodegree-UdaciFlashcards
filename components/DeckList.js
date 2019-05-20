@@ -1,41 +1,25 @@
 import React, { Component } from 'react'
-import { Card, CardItem, Container, Header, Content, Right, Text, View } from 'native-base';
+import { View, ScrollView } from 'react-native'
 import { getDecks } from '../utils/api'
 import { connect } from 'react-redux'
 import { receiveDecks } from '../actions'
+import Deck from './Deck'
 
 class DeckList extends Component {
-    state = {
-        decks: []
-    }
     componentDidMount() {
-       getDecks().then((res) => {
-           this.props.dispatch(receiveDecks(res))
-           this.setState({
-               decks: Object.values(res)
-           })
-       })
+        getDecks().then((res) => {
+            this.props.dispatch(receiveDecks(res))
+        })
     }
     render() {
         const { decks } = this.props
 
         return (
-            <Container>
-                <Header />           
-                <Content>
-                    {decks? Object.values(decks).map((deck) => (
-                        <Card>
-                        <CardItem header button onPress={() => this.props.navigation.navigate(
-                            'DeckView', 
-                            { deckTitle: deck.title}
-                        )}>
-                         <Text>{deck.title}</Text>
-                         <Right><Text note>{deck.questions.length} cards</Text></Right>
-                        </CardItem>
-                      </Card>
-                    )): <View></View>}
-                </Content>
-            </Container>
+            <ScrollView>
+                {decks ? Object.keys(decks).map((title) => (
+                    <Deck deckTitle={title} navigation={this.props.navigation} key={title} />
+                )) : <View></View>}
+            </ScrollView>
         )
     }
 }
