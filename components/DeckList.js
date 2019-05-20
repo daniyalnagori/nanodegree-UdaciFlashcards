@@ -23,14 +23,14 @@ class DeckList extends Component {
             <Container>
                 <Header />           
                 <Content>
-                    {decks? Object.values(decks).map((item) => (
+                    {decks? Object.values(decks).map((deck) => (
                         <Card>
                         <CardItem header button onPress={() => this.props.navigation.navigate(
                             'DeckView', 
-                            { deck: item}
+                            { deckTitle: deck.title}
                         )}>
-                         <Text>{item.title}</Text>
-                         <Right><Text note>{item.questions.length} cards</Text></Right>
+                         <Text>{deck.title}</Text>
+                         <Right><Text note>{deck.questions.length} cards</Text></Right>
                         </CardItem>
                       </Card>
                     )): <View></View>}

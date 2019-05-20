@@ -10,6 +10,7 @@ import { Provider } from 'react-redux'
 import reducer from './reducers'
 import middleware from './middleware'
 import NewCard from './components/NewCard'
+import QuizView from './components/QuizView'
 
 
 export default class App extends React.Component {
@@ -44,6 +45,12 @@ export default class App extends React.Component {
         screen: NewCard,
         navigationOptions: {
           title: 'New Card'
+        }
+      },
+      QuizView: {
+        screen: QuizView,
+        navigationOptions: {
+          title: 'Quiz'
         }
       }
     })

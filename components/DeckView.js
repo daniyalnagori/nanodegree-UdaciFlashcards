@@ -1,28 +1,19 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Alert, TouchableHighlight } from 'react-native'
-import { getDeck } from '../utils/api'
+import { View, Text, StyleSheet, TouchableHighlight } from 'react-native'
+import { connect } from 'react-redux'
 
 class DeckView extends Component {
-    state = {
-        deck: null
-    }
     static navigationOptions = ({ navigation }) => {
-        const { deck } = navigation.state.params
+        const { deckTitle } = navigation.state.params
 
         return {
-            title: `${deck.title}`
+            title: deckTitle
         }
     }
-    // componentDidMount(){
-    //     getDeck('JavaScript').then((res) => {
-    //         this.setState({
-    //             deck: res
-    //         }) 
-    //     })
-    // }
     render() {
-        // const { deck } = this.state
-        const { deck } = this.props.navigation.state.params
+        const { decks } = this.props
+        const { deckTitle } = this.props.navigation.state.params
+        const deck = decks[deckTitle]
         return (
             <View style={style.container}>
                 <Text style={style.mainHeading}>{deck.title}</Text>
@@ -32,9 +23,7 @@ class DeckView extends Component {
                         <Text style={style.buttonText}>Add Card</Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => {
-                    Alert.alert('You tapped the button!');
-                }}>
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('QuizView', { deckTitle: deck.title })}>
                     <View style={[style.btn, { marginTop: 10 }]}>
                         <Text style={style.buttonText}>Start Quiz</Text>
                     </View>
@@ -69,4 +58,10 @@ const style = StyleSheet.create({
     }
 })
 
-export default DeckView
+function mapStateToProps({ decks }) {
+    return {
+        decks
+    }
+}
+
+export default connect(mapStateToProps)(DeckView)
