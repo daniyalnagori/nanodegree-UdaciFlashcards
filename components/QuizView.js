@@ -43,6 +43,14 @@ class QuizView extends Component {
         const deck = decks[this.props.navigation.state.params.deckTitle]
         const showQuestion = this.state.count < deck.questions.length ? true : false
         const currentQuestion = deck.questions[this.state.count]
+        
+        if (deck.questions.length === 0) {
+            return (
+                <Card>
+                    <Text>Sorry You cannot take a quiz because there are no cards in the deck.</Text>
+                </Card>
+            )
+        }
         return (
             <View style={styles.container}>
                 {showQuestion ?

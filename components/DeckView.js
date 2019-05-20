@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableHighlight } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
+import { Button } from 'react-native-elements'
 
 class DeckView extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -18,17 +19,15 @@ class DeckView extends Component {
             <View style={style.container}>
                 <Text style={style.mainHeading}>{deck.title}</Text>
                 <Text style={style.subHeading}>{deck.questions.length} cards</Text>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('NewCard', { deckTitle: deck.title })}>
-                    <View style={style.btn}>
-                        <Text style={style.buttonText}>Add Card</Text>
-                    </View>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('QuizView', { deckTitle: deck.title })}>
-                    <View style={[style.btn, { marginTop: 10 }]}>
-                        <Text style={style.buttonText}>Start Quiz</Text>
-                    </View>
-                </TouchableHighlight>
-
+                <Button
+                    title="Add Card"
+                    onPress={() => this.props.navigation.navigate('NewCard', { deckTitle: deck.title })}
+                    buttonStyle={{ marginTop: 20, marginBottom: 10 }}
+                />
+                <Button
+                    title="Start Quiz"
+                    onPress={() => this.props.navigation.navigate('QuizView', { deckTitle: deck.title })}
+                />
             </View>
         )
     }
@@ -47,15 +46,6 @@ const style = StyleSheet.create({
         fontSize: 25,
         color: 'grey'
     },
-    buttonText: {
-        padding: 20,
-        color: 'white'
-    },
-    btn: {
-        marginTop: 50,
-        backgroundColor: 'blue',
-        borderRadius: 5
-    }
 })
 
 function mapStateToProps({ decks }) {

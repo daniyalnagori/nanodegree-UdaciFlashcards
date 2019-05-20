@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { Input, Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { storeCardToDeck } from '../actions'
 import { saveCardToDeck } from '../utils/api'
-
 
 class NewCard extends Component {
     state = {
@@ -27,17 +26,21 @@ class NewCard extends Component {
         this.props.dispatch(storeCardToDeck(this.state, deckTitle))
 
         saveCardToDeck(deckTitle, this.state)
+
+        this.props.navigation.goBack()
     }
     render() {
         return (
-            <View>
+            <View style={styles.container}>
                 <Input
                     placeholder='Question'
                     onChangeText={this.handleQuesChange}
+                    inputContainerStyle={{ marginBottom: 15 }}
                 />
                 <Input
                     placeholder='Answer'
                     onChangeText={this.handleAnswerChange}
+                    inputContainerStyle={{ marginBottom: 15 }}
                 />
 
                 <Button
@@ -48,5 +51,13 @@ class NewCard extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+})
 
 export default connect()(NewCard)
