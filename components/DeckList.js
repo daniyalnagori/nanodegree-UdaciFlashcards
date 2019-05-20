@@ -7,9 +7,14 @@ import Deck from './Deck'
 
 class DeckList extends Component {
     componentDidMount() {
-        getDecks().then((res) => {
-            this.props.dispatch(receiveDecks(res))
+        this.willFocus = this.props.navigation.addListener('willFocus', () => {
+            getDecks().then((res) => {
+                this.props.dispatch(receiveDecks(res))
+            })
         })
+    }
+    componentWillUnmount() {
+        this.willFocus.remove();
     }
     render() {
         const { decks } = this.props

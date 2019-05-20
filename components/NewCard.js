@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { Input, Button } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { storeCardToDeck } from '../actions'
@@ -31,7 +31,7 @@ class NewCard extends Component {
     }
     render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container}  behavior="padding" enabled>
                 <Input
                     placeholder='Question'
                     onChangeText={this.handleQuesChange}
@@ -47,7 +47,7 @@ class NewCard extends Component {
                     title="Submit"
                     onPress={this.onSubmit}
                 />
-            </View>
+            </KeyboardAvoidingView>
         )
     }
 }
